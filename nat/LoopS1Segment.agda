@@ -252,28 +252,3 @@ module _ (x : b ≡ b) where
     η eqv (inr s) = η-eqv-r s (Seg.dimx (f-eqv (inr s)) (dmin (f-eqv (inr s))))
     h eqv = g eqv
     ε eqv s = ε-eqv s (Seg.dimx s (dmin s))
-
-
-
-
-{-
-module _ (x : b ≡ b) where
-{-
-  (Seg<0 x ⊎ Seg≥0 x) ≃
-  (Seg≤0 x ⊎ Seg>0 x) ≃
-  (Seg<0 (l ◾ x) ⊎ Seg>0 x) ≃
-  (Seg<0 (l ◾ x) ⊎ Seg≥0 (l ◾ x))
--}
-
-  P-l : (Seg<0 x ⊎ Seg≥0 x) ≃
-        (Seg<0 (l ◾ x) ⊎ Seg≥0 (l ◾ x))
-  P-l = (ide (Seg<0 (l ◾ x)) ⊎e shift-seg≥0 (l ◾ x)) ∘e
-        (ide (Seg<0 (l ◾ x)) ⊎e seg0-eqv (l ◾ x) ⊎e ide (Seg>0 (l ◾ x))) ∘e
-        ⊎-assoc ∘e
-        !e (shift-seg≤0 (l ◾ x) ⊎e ide (Seg>0 (l ◾ x))) ∘e
-        {!!} ⊎e {!!}
-
-  P : (a : S1) → (a ≡ b) → Set1
-  P = ind-s1 (λ a → (a ≡ b) → Set1) (λ x → (Seg<0 x ⊎ Seg≥0 x)) (funext (λ x → tpt-fn l (λ x → (Seg<0 x ⊎ Seg≥0 x)) x ◾ tpt-const l {!!} ◾ {!!}))
-  
--}

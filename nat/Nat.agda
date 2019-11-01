@@ -88,9 +88,17 @@ module _ {x1 : b ≡ b} where
     module D-suc where
     aux : (s1 : Seg≠ (l ◾ x1) refl (lcomp-eqv l) ⊎ Seg refl (l ◾ x1) (lcomp-eqv l)) →
           (β1 : seg (l ◾ x1) ≡ s1) →
-          D (fst (g-dec-subtype-eqv.aux seg (l ◾ x1) (suc-is-nat n1) s1 β1 (suc-is-nat.aux n1 s1 β1))) x2 
-    aux (inl s1) _ = rec⊥ (seg-excl (l ◾ x1) s1 (f (shift-seg≥0 (l ◾ x1)) (inr (f (incr-max-eqv x1) (fst (nat-out n1))))))
-    aux (inr s1) β1 = tpt (λ s → D* s x2) (! (seg-cmpt x1) ◾ β1) (D*-incr {x1} {seg x1} {fst (nat-out n1)} {x2} (tpt (λ s → D* s x2) (! (snd (nat-out n1))) d))
+          D (fst (g-dec-subtype-eqv.aux seg (l ◾ x1) (suc-is-nat n1)
+                                        s1 β1 (suc-is-nat.aux n1 s1 β1))) x2 
+    aux (inl s1) _ =
+      rec⊥ (seg-excl (l ◾ x1) s1
+                      (f (shift-seg≥0 (l ◾ x1))
+                         (inr (f (incr-max-eqv x1) (fst (nat-out n1))))))
+    aux (inr s1) β1 =
+      tpt (λ s → D* s x2)
+          (! (seg-cmpt x1) ◾ β1)
+          (D*-incr {x1} {seg x1} {fst (nat-out n1)} {x2}
+                   (tpt (λ s → D* s x2) (! (snd (nat-out n1))) d))
 
   D-pred : {n1 : is-nat x1} → {x2 : b ≡ b} →
            D (fst (nat-out (suc-is-nat n1))) x2 →
@@ -98,18 +106,24 @@ module _ {x1 : b ≡ b} where
   D-pred {n1} {x2} = aux1 _ refl
     module D-pred where
     aux1 : (s1 : Seg<0 (l ◾ x1) ⊎ Seg≥0 (l ◾ x1)) → (β1 : seg (l ◾ x1) ≡ s1) →
-          D (fst (g-dec-subtype-eqv.aux seg (l ◾ x1) (suc-is-nat n1) s1 β1 (suc-is-nat.aux n1 s1 β1))) x2 →
+          D (fst (g-dec-subtype-eqv.aux seg (l ◾ x1) (suc-is-nat n1)
+                                        s1 β1 (suc-is-nat.aux n1 s1 β1))) x2 →
           D (fst (nat-out n1)) x2 ⊎ (x2 ≡ l ◾ x1)
-    aux1 (inl s1) β1 = rec⊥ (seg-excl (l ◾ x1) s1 (f (shift-seg≥0 (l ◾ x1)) (inr (f (incr-max-eqv x1) (fst (nat-out n1))))))
-    aux1 (inr s1) β1 d1 = aux2 _ refl n1 (tpt (λ s → D* s x2) (! β1 ◾ seg-cmpt x1) d1)
+    aux1 (inl s1) β1 =
+      rec⊥ (seg-excl (l ◾ x1) s1
+                      (f (shift-seg≥0 (l ◾ x1))
+                         (inr (f (incr-max-eqv x1) (fst (nat-out n1))))))
+    aux1 (inr s1) β1 d1 =
+      aux2 _ refl n1 (tpt (λ s → D* s x2) (! β1 ◾ seg-cmpt x1) d1)
       module aux1 where
       aux2 : (s2 : Seg<0 x1 ⊎ Seg≥0 x1) → seg x1 ≡ s2 → [ coprod-fst s2 ] →
              D* (incr s2) x2 → D (fst (nat-out n1)) x2 ⊎ (x2 ≡ l ◾ x1)
       aux2 (inl s2) β2 ()
-      aux2 (inr s2) β2 _ (inl d2) = inl (tpt (λ s → D* s x2) (! β2 ◾ snd (nat-out n1)) d2)
-      aux2 (inr s2) β2 _ (inr (_ , e1)) = inr (dec-dne (path-s1-has-dec-eq x2 (l ◾ x1)) (nn-map (f (eqv-adj (!e leqv))) e1))
-
-
+      aux2 (inr s2) β2 _ (inl d2) =
+        inl (tpt (λ s → D* s x2) (! β2 ◾ snd (nat-out n1)) d2)
+      aux2 (inr s2) β2 _ (inr (_ , e1)) =
+        inr (dec-dne (path-s1-has-dec-eq x2 (l ◾ x1))
+                     (nn-map (f (eqv-adj (!e leqv))) e1))
 
 module _ where
 

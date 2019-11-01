@@ -118,7 +118,23 @@ module ApproximationBase
                    (lem5 (l ◾ x2 , suc-is-nat n2) (x1 , n3) r3)
                    (ap suc e2))
       aux2 (inr e2) (inl r3) = 
-        s*-a-coh1 (ax n3) (g lwhisk-eqv (ap fst (! e2))) (ap fst (! e2)) (ε lwhisk-eqv _) (g (tpt-nat-suc (g lwhisk-eqv (ap fst (! e2))) (ap fst (! e2)) (ε lwhisk-eqv _)) (ap-snd (! e2))) (ap-snd (! e2)) (ε' (tpt-nat-suc (g lwhisk-eqv (ap fst (! e2))) (ap fst (! e2)) (ε lwhisk-eqv (ap fst (! e2)))) (ap-snd (! e2))) (leq-is-prop (x2 , n2) (x1 , n3) _ _) refl refl (a-coh1 (ax n3) (g lwhisk-eqv (ap fst (! e2))) (g (tpt-nat-suc (g lwhisk-eqv (ap fst (! e2))) (ap fst (! e2)) (ε lwhisk-eqv _)) (ap-snd (! e2))) (leq-is-prop (x2 , n2) (x1 , n3) _ _) refl refl)
+        s*-a-coh1
+          (ax n3) (g lwhisk-eqv (ap fst (! e2))) (ap fst (! e2))
+          (ε lwhisk-eqv _)
+          (g (tpt-nat-suc (g lwhisk-eqv (ap fst (! e2)))
+                          (ap fst (! e2)) (ε lwhisk-eqv _))
+             (ap-snd (! e2)))
+          (ap-snd (! e2))
+          (ε' (tpt-nat-suc (g lwhisk-eqv (ap fst (! e2)))
+                           (ap fst (! e2)) (ε lwhisk-eqv (ap fst (! e2))))
+              (ap-snd (! e2)))
+          (leq-is-prop (x2 , n2) (x1 , n3) _ _)
+          refl refl
+          (a-coh1 (ax n3)
+            (g lwhisk-eqv (ap fst (! e2)))
+            (g (tpt-nat-suc (g lwhisk-eqv (ap fst (! e2)))
+                            (ap fst (! e2)) (ε lwhisk-eqv _)) (ap-snd (! e2)))
+            (leq-is-prop (x2 , n2) (x1 , n3) _ _) refl refl)
       aux2 (inr e2) (inr e3) = rec⊥ (lem9 (lem3 (x2 , n2)) (e3 ◾ ! e2))
 
 

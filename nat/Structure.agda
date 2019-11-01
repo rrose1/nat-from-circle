@@ -447,26 +447,27 @@ module _ {X : Set} where
 
 
      upcl-eq* : {D1 D2 : (x1 : X) → Set} → (e1 : (x1 : X) → D1 x1 ≃ D2 x1) →
-               {e2 : D1 ≡ D2} → (α : g fam-eqv e1 ≡ e2) →
-               {R1 : Rel D1} → {R2 : Rel D2} →
-               (e3 : f-rel-eqv e1 R1 R2 × g-rel-eqv e1 R1 R2) →
-               {rp1 : rel-is-prop R1} → {rp2 : rel-is-prop R2} →
-               {e4 : (λ {x1} → tpt Rel e2 R1 {x1}) ≡ R2} →
-               (rel-eq e1 α rp1 rp2 e3 ≡ e4) →
-               (e5 : (λ {x1} {d1} {x2} {d2} →
-                        tpt2 (λ D → rel-is-prop {D = D}) e2 e4 rp1
-                             {x1} {d1} {x2} {d2}) ≡ rp2) →
-               {d11 : D1 x1} → {d21 : D2 x1} →
-               (e6 : g (e1 x1) d21 ≡ d11) →
-               {e7 : tpt (λ D → D x1) (! e2) d21 ≡ d11} →
-                 elem-fam-eq e1 α e6 ≡ e7 →
-               {d14 : D1 x4} → {d24 : D2 x4} →
-               (e8 : g (e1 x4) d24 ≡ d14) →
-               {e9 : tpt (λ D → D x4) (! e2) d24 ≡ d14} →
-                 elem-fam-eq e1 α e8 ≡ e9 →
-               {up1 : is-upcl s R1 rp1 d11 d14} → {up2 : is-upcl s R2 rp2 d21 d24} →
-               up-data* e1 R1 rp1 rp2 e3 d11 d21 e8 up1 up2 →
-               (λ {x2} → upcl-tpt e2 e4 e5 e7 e9 up1 {x2}) ≡ up2
+                {e2 : D1 ≡ D2} → (α : g fam-eqv e1 ≡ e2) →
+                {R1 : Rel D1} → {R2 : Rel D2} →
+                (e3 : f-rel-eqv e1 R1 R2 × g-rel-eqv e1 R1 R2) →
+                {rp1 : rel-is-prop R1} → {rp2 : rel-is-prop R2} →
+                {e4 : (λ {x1} → tpt Rel e2 R1 {x1}) ≡ R2} →
+                (rel-eq e1 α rp1 rp2 e3 ≡ e4) →
+                (e5 : (λ {x1} {d1} {x2} {d2} →
+                         tpt2 (λ D → rel-is-prop {D = D}) e2 e4 rp1
+                              {x1} {d1} {x2} {d2}) ≡ rp2) →
+                {d11 : D1 x1} → {d21 : D2 x1} →
+                (e6 : g (e1 x1) d21 ≡ d11) →
+                {e7 : tpt (λ D → D x1) (! e2) d21 ≡ d11} →
+                  elem-fam-eq e1 α e6 ≡ e7 →
+                {d14 : D1 x4} → {d24 : D2 x4} →
+                (e8 : g (e1 x4) d24 ≡ d14) →
+                {e9 : tpt (λ D → D x4) (! e2) d24 ≡ d14} →
+                  elem-fam-eq e1 α e8 ≡ e9 →
+                {up1 : is-upcl s R1 rp1 d11 d14} →
+                {up2 : is-upcl s R2 rp2 d21 d24} →
+                up-data* e1 R1 rp1 rp2 e3 d11 d21 e8 up1 up2 →
+                (λ {x2} → upcl-tpt e2 e4 e5 e7 e9 up1 {x2}) ≡ up2
      upcl-eq* e1 {refl} α1 {R1} e3 {rp1} {rp2} {refl} α2 refl e6 {refl}
               α3 e8 {refl} α4 {up1} {up2} α5 =
        funext' (λ {x2} →
@@ -478,4 +479,6 @@ module _ {X : Set} where
                          (f (eqv-adj (!e fam-eqv)) α1))))) ◾
          ! (ap (λ e → f e (fst (f up1 (g (e1 x2) (fst w) ,
                             tpt (R1 (g (e1 x2) (fst w))) e8 (snd e3 (snd w))))))
-               (ap (λ a → a (s x2)) (f (eqv-adj (!e fam-eqv)) α1))) ◾ α5 {x2} (fst w) (tpt (R1 (g (e1 x2) (fst w))) e8 (snd e3 (snd w))) (snd w)))
+               (ap (λ a → a (s x2)) (f (eqv-adj (!e fam-eqv)) α1))) ◾
+         α5 {x2} (fst w) (tpt (R1 (g (e1 x2) (fst w)))
+                              e8 (snd e3 (snd w))) (snd w)))
