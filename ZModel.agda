@@ -6,48 +6,51 @@ open import UTT
 
 module Integers where
 
-  {-# BUILTIN REWRITE _≡_ #-}
+  -- If type-checking is taking too long, one option is to use
+  -- the postulated Z-model below instead of LoopS1
 
-  postulate
-    Z : Set
-    zero : Z
-    e : Z ≃ Z
+  -- {-# BUILTIN REWRITE _≡_ #-}
 
-  module _ {P : Z → Set l1} (z* : P zero) 
-           (e* : (m : Z) → P m ≃ P (f e m)) where
-    postulate
-      indZ : (m : Z) → P m
-      indZ-zero : indZ zero ≡ z*
-    {-# REWRITE indZ-zero #-}
+  -- postulate
+  --   Z : Set
+  --   zero : Z
+  --   e : Z ≃ Z
 
-    postulate
-      indZ-e : (m : Z) → indZ (f e m) ≡ f (e* m) (indZ m)
+  -- module _ {P : Z → Set l1} (z* : P zero) 
+  --          (e* : (m : Z) → P m ≃ P (f e m)) where
+  --   postulate
+  --     indZ : (m : Z) → P m
+  --     indZ-zero : indZ zero ≡ z*
+  --   {-# REWRITE indZ-zero #-}
 
-  -- import LoopS1
+  --   postulate
+  --     indZ-e : (m : Z) → indZ (f e m) ≡ f (e* m) (indZ m)
 
-  -- Z : Set
-  -- Z = LoopS1.Z
+  import LoopS1
 
-  -- zero : Z
-  -- zero = LoopS1.zero
+  Z : Set
+  Z = LoopS1.Z
 
-  -- e : Z ≃ Z
-  -- e = LoopS1.e
+  zero : Z
+  zero = LoopS1.zero
 
-  -- indZ : {P : Z → Set l1} → (z* : P zero) →
-  --        (e* : (m : Z) → P m ≃ P (f e m)) →
-  --        (m : Z) → P m
-  -- indZ = LoopS1.indZ
+  e : Z ≃ Z
+  e = LoopS1.e
 
-  -- indZ-zero : {P : Z → Set l1} → (z* : P zero) →
-  --             (e* : (m : Z) → P m ≃ P (f e m)) →
-  --             indZ z* e* zero ≡ z*
-  -- indZ-zero _ _ = refl
+  indZ : {P : Z → Set l1} → (z* : P zero) →
+         (e* : (m : Z) → P m ≃ P (f e m)) →
+         (m : Z) → P m
+  indZ = LoopS1.indZ
 
-  -- indZ-e : {P : Z → Set l1} → (z* : P zero) →
-  --          (e* : (m : Z) → P m ≃ P (f e m)) →
-  --          (m : Z) → indZ z* e* (f e m) ≡ f (e* m) (indZ z* e* m)
-  -- indZ-e = LoopS1.indZ-e
+  indZ-zero : {P : Z → Set l1} → (z* : P zero) →
+              (e* : (m : Z) → P m ≃ P (f e m)) →
+              indZ z* e* zero ≡ z*
+  indZ-zero _ _ = refl
+
+  indZ-e : {P : Z → Set l1} → (z* : P zero) →
+           (e* : (m : Z) → P m ≃ P (f e m)) →
+           (m : Z) → indZ z* e* (f e m) ≡ f (e* m) (indZ z* e* m)
+  indZ-e = LoopS1.indZ-e
 
 open Integers using (Z ; zero ; e ; indZ ; indZ-e) public
 
