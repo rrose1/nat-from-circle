@@ -76,7 +76,7 @@ module Recursion where
     recZ-η : (m : Z) → recZ m ≡ g e* (recZ (f e m))
     recZ-η m = ap recZ (! (η e m)) ● recZ-!e (f e m)
 
-open Recursion
+open Recursion public
 
 
 module Arithmetic where

@@ -685,6 +685,18 @@ module _ {X : Set l1} (ϕ : has-dec-eq X) where
                             ap inl (tpt-const-eq-var e2 e3)))  
     aux (inr n) = rec⊥ (n refl)
 
+module _ {X : Set l1} (ϕ : {x1 x2 : X} → x1 ≐ x2 → x1 ≡ x2) where
+  stab-eq->is-set : {x1 x2 : X} → is-prop (x1 ≡ x2)
+  stab-eq->is-set {x1} {x2} e1 e2 =
+    g lwhisk-eqv
+      (! (coh e1 λ k → k e1) ●
+      f happly-eqv (apd _ (λ x2 → ϕ {x1} {x2}) e1) (λ k → k e1) ●
+      ! (f happly-eqv (apd _ (λ x2 → ϕ {x1} {x2}) e2) (λ k → k e1)) ●
+      coh e2 (λ k → k e1))
+    module stab-eq->is-set where
+    coh : {x2 : X} → (e1 : x1 ≡ x2) → (v : x1 ≐ x2) →
+          tpt (λ z → x1 ≐ z → x1 ≡ z) e1 ϕ v ≡ ϕ (λ k → k refl) ● e1
+    coh refl v = ap ϕ (is-prop-pi (λ _ ()) _ _) ● ! ●unitr
 
 ⊎-eq : {X1 X2 : Set l1} → X1 ≡ X2 →
        {Y1 Y2 : Set l2} → Y1 ≡ Y2 →

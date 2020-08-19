@@ -53,6 +53,9 @@ module ZStability where
     f stab-lem2 (f (stab-lem1 (x1 + - x2) zero)
                     (d00 (seg (x1 + (- x2))) , nn-map (g stab-lem2) e1))
 
+  Z-is-set : is-set Z
+  Z-is-set = stab-eq->is-set stab
+
   Z-has-dec-eq : has-dec-eq Z
   Z-has-dec-eq x1 x2 = aux1 (seg (x1 + - x2))
     module Z-has-dec-eq where
@@ -64,9 +67,6 @@ module ZStability where
       aux2 : R dmin dmax ⊎ (zero ≐ x1 + - x2) → (x1 ≡ x2) ⊎ (x1 ≢ x2)
       aux2 (inl r1) = inr (λ e1 → st r1 (g stab-lem2 e1))
       aux2 (inr e1) = inl (f stab-lem2 (stab e1))
-
-  Z-is-set : is-set Z
-  Z-is-set = has-dec-eq->is-set Z-has-dec-eq
 
 open ZStability using (stab ; Z-has-dec-eq ; Z-is-set) public
 
